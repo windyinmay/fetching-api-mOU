@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export default function APIsTable(props) {
     const classes = useStyles();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleChangePage = (e, newPage) => {
         setPage(newPage)
@@ -27,9 +27,9 @@ export default function APIsTable(props) {
     console.log(props.data.entries?.length)
     return (
         <div style={{ display: 'table', tableLayout: 'fixed', height: 400, width: '100%' }}>
-            <Paper>
+            <Paper className={classes.paper}>
             <TableContainer component={Paper}>
-                    <Table aria-label="simple table" stickyHeader className={classes.table}>
+                    <Table aria-label="simple table" stickyHeader>
                         <TableHead>
                             <TableRow>
                                 <TableCell className={classes.sticky}>APIs</TableCell>
@@ -41,7 +41,8 @@ export default function APIsTable(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {props.data?.length !==0 && props.data?.entries.map((row, index) => (
+                            {props.data?.length !==0
+                                && props.data?.entries.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
                                 <TableRow key={index}>
                                     <TableCell component="th" scope="row" className={classes.sticky}>
                                         {row.API}
@@ -57,7 +58,7 @@ export default function APIsTable(props) {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 25, 50]}
+                    rowsPerPageOptions={[10 ,20, 40 , 60]}
                     component="div"
                     count={props.data.entries?.length}
                     rowsPerPage={rowsPerPage}
@@ -71,7 +72,7 @@ export default function APIsTable(props) {
         )
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     table:{
         width: 400,
         margin: 'auto'
@@ -81,5 +82,11 @@ const useStyles = makeStyles({
         left: 0,
         background: 'white',
         boxShadow: "5px 2px 5px grey"
+    },
+    paper: {
+        width: '100%',
+        marginBottom: theme.spacing(2),
     }
-})
+    }
+    )
+)
