@@ -1,9 +1,9 @@
 import React from 'react'
-import Axios from "./services/Axios";
+import Main from '../src/views/Main';
 function App() {
   return (
     <div className="App">
-       <Axios/>
+       <Main/>
     </div>
   );
 }

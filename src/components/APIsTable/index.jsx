@@ -23,13 +23,23 @@ export default function APIsTable(props) {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
+    // const fileredData = props.data.entries?.filter((el) => {
+    //     //if no input the return the original
+    //     if (props.input === '') {
+    //         return el;
+    //     }//return the item which contains the user input
+    //     else {
+    //         return el.text.toLowerCase().includes(props.input)
+    //     }
+    // })
     console.log(props.data)
     console.log(props.data.entries?.length)
     return (
-        <div style={{ display: 'table', tableLayout: 'fixed', height: 400, width: '100%' }}>
+        <div style={{ display: 'table', tableLayout: 'fixed', height: 400, width: '100%'}}>
             <Paper className={classes.paper}>
             <TableContainer component={Paper}>
-                    <Table aria-label="simple table" stickyHeader>
+                    <Table aria-label="simple table" stickyHeader className={classes.table}>
                         <TableHead>
                             <TableRow>
                                 <TableCell className={classes.sticky}>APIs</TableCell>
@@ -58,14 +68,13 @@ export default function APIsTable(props) {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[10 ,20, 40 , 60]}
+                    rowsPerPageOptions={[10 ,20, 40 , 60, {value: -1, label: 'All'}]}
                     component="div"
                     count={props.data.entries?.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowSize={30}
                 ></TablePagination>
             </Paper>
         </div>
@@ -74,8 +83,7 @@ export default function APIsTable(props) {
 
 const useStyles = makeStyles((theme) => ({
     table:{
-        width: 400,
-        margin: 'auto'
+        margin: 'auto',
     },
     sticky: {
         position: "sticky",
